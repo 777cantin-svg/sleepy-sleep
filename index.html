@@ -6,103 +6,68 @@
   <title>Sheepy Sleep</title>
   <style>
     :root{
-      --bg1:#08101c;
-      --bg2:#0f1b2d;
-      --card:rgba(255,255,255,0.08);
-      --line:rgba(255,255,255,0.14);
+      --bg1:#0b1220;
+      --bg2:#111b2f;
+      --card:rgba(255,255,255,.08);
+      --line:rgba(255,255,255,.14);
       --text:#f5f7fb;
-      --sub:rgba(255,255,255,0.68);
-      --soft:rgba(255,255,255,0.4);
-      --accent:#b7d3ff;
-      --accent2:#dce9ff;
+      --sub:rgba(255,255,255,.7);
+      --accent:#d9e7ff;
+      --accent2:#b9d0ff;
     }
     *{box-sizing:border-box}
     body{
       margin:0;
       min-height:100vh;
-      font-family:Arial,"Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif;
-      color:var(--text);
-      background:
-        radial-gradient(circle at 80% 12%, rgba(255,232,177,0.18), transparent 16%),
-        radial-gradient(circle at 20% 20%, rgba(120,160,255,0.10), transparent 20%),
-        linear-gradient(180deg,var(--bg2),var(--bg1));
       overflow:hidden;
+      color:var(--text);
+      font-family:Arial,"Yu Gothic",sans-serif;
+      background:
+        radial-gradient(circle at 80% 15%, rgba(255,230,170,.18), transparent 15%),
+        radial-gradient(circle at 20% 20%, rgba(130,170,255,.12), transparent 20%),
+        linear-gradient(180deg,var(--bg2),var(--bg1));
     }
-    .stars{
-      position:fixed;
-      inset:0;
-      pointer-events:none;
-      z-index:0;
-    }
+    .stars{position:fixed; inset:0; pointer-events:none;}
     .star{
-      position:absolute;
-      width:2px;
-      height:2px;
-      border-radius:50%;
-      background:#fff;
-      opacity:.4;
-      animation:twinkle linear infinite;
+      position:absolute; width:2px; height:2px; border-radius:50%;
+      background:#fff; opacity:.4; animation:twinkle linear infinite;
     }
-    @keyframes twinkle{
-      0%,100%{opacity:.15}
-      50%{opacity:.8}
-    }
+    @keyframes twinkle{0%,100%{opacity:.15}50%{opacity:.8}}
     .wrap{
-      position:relative;
-      z-index:1;
-      min-height:100vh;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      padding:20px;
+      position:relative; z-index:1; min-height:100vh;
+      display:flex; align-items:center; justify-content:center; padding:20px;
     }
     .card{
-      width:min(92vw,520px);
+      width:min(92vw,480px);
       background:var(--card);
       border:1px solid var(--line);
       border-radius:28px;
+      padding:28px 22px;
       box-shadow:0 20px 60px rgba(0,0,0,.35);
       backdrop-filter:blur(8px);
-      padding:28px 22px;
       text-align:center;
     }
-    h1{
-      margin:6px 0 8px;
-      font-size:42px;
-      font-weight:700;
-      letter-spacing:.04em;
+    h1{margin:0 0 8px; font-size:42px}
+    .sub{margin:0 0 18px; color:var(--sub); font-size:14px; letter-spacing:.12em}
+    .sheep-big{font-size:64px; margin:6px 0 8px; animation:bob 3s ease-in-out infinite}
+    @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+    .status{
+      margin:18px 0;
+      min-height:34px;
+      font-size:22px;
+      color:#fff;
+      letter-spacing:.08em;
     }
-    .sub{
+    .count{
+      margin-bottom:14px;
       color:var(--sub);
-      margin:0 0 22px;
       font-size:14px;
-      letter-spacing:.12em;
+      letter-spacing:.14em;
+      text-transform:uppercase;
     }
-    .badge{
-      display:inline-block;
-      padding:8px 16px;
-      border-radius:999px;
-      border:1px solid var(--line);
-      background:rgba(255,255,255,.05);
-      color:var(--sub);
-      font-size:13px;
-      margin-bottom:20px;
-    }
-    .controls{
-      display:grid;
-      gap:14px;
-      margin:20px 0;
-      text-align:left;
-    }
-    label{
-      display:block;
-      color:var(--sub);
-      font-size:13px;
-      margin-bottom:8px;
-    }
-    select,input[type="range"]{
-      width:100%;
-    }
+    .group{margin:14px 0; text-align:left}
+    label{display:block; margin-bottom:8px; font-size:13px; color:var(--sub)}
+    select,input[type="range"]{width:100%}
     select{
       background:rgba(255,255,255,.08);
       color:#fff;
@@ -111,29 +76,14 @@
       padding:12px;
       font-size:14px;
     }
-    input[type="range"]{
-      accent-color:#d7e6ff;
-    }
-    .btns{
-      display:flex;
-      gap:12px;
-      justify-content:center;
-      flex-wrap:wrap;
-      margin-top:22px;
-    }
     button{
-      border:none;
-      cursor:pointer;
-      border-radius:999px;
-      padding:14px 24px;
-      font-size:15px;
-      font-weight:700;
-      letter-spacing:.08em;
-      transition:.2s ease;
+      border:none; cursor:pointer; border-radius:999px;
+      padding:14px 24px; font-size:15px; font-weight:700;
+      letter-spacing:.08em; transition:.2s ease;
     }
     button:hover{transform:translateY(-1px)}
     .primary{
-      background:linear-gradient(180deg,#dce9ff,#b7d3ff);
+      background:linear-gradient(180deg,var(--accent),var(--accent2));
       color:#10203c;
     }
     .ghost{
@@ -141,112 +91,177 @@
       color:#fff;
       border:1px solid var(--line);
     }
-    .sleep-screen{
-      position:fixed;
-      inset:0;
-      z-index:2;
-      display:none;
-    }
-    .sleep-screen.active{display:block}
-    .topbar{
-      position:absolute;
-      top:18px;
-      left:18px;
-      right:18px;
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      z-index:4;
-    }
-    .counter{
-      color:var(--sub);
-      font-size:13px;
-      letter-spacing:.15em;
-      text-transform:uppercase;
-      background:rgba(0,0,0,.18);
-      border:1px solid rgba(255,255,255,.08);
-      border-radius:999px;
-      padding:10px 14px;
-    }
-    .stop{
-      background:rgba(255,255,255,.08);
-      color:#fff;
-      border:1px solid var(--line);
+    .btns{display:flex; gap:12px; justify-content:center; flex-wrap:wrap; margin-top:20px}
+    .bubble{
+      display:inline-block;
+      min-height:32px;
       padding:10px 16px;
-      font-size:12px;
+      border-radius:999px;
+      background:rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.1);
+      color:#eef4ff;
+      font-size:18px;
     }
-    .whisper{
-      position:absolute;
-      top:18%;
-      left:50%;
-      transform:translateX(-50%);
-      width:90%;
-      text-align:center;
-      color:rgba(255,255,255,.9);
-      font-size:clamp(24px,4vw,40px);
-      letter-spacing:.12em;
-      text-shadow:0 0 30px rgba(180,210,255,.35);
-      opacity:0;
-      transition:opacity .9s ease;
-      z-index:4;
-      pointer-events:none;
-    }
-    .whisper.show{opacity:1}
+    .tiny{margin-top:14px; color:rgba(255,255,255,.5); font-size:12px}
     .field{
-      position:absolute;
-      inset:0;
-      overflow:hidden;
-      z-index:3;
+      position:fixed; inset:0; pointer-events:none; overflow:hidden;
     }
-    .sheep{
-      position:absolute;
-      transform:translate(-50%,-50%);
-      animation:floatY 4.5s ease-in-out infinite;
-      filter:drop-shadow(0 8px 20px rgba(0,0,0,.22));
+    .float-sheep{
+      position:absolute; font-size:30px; opacity:.85;
+      animation:floatUp linear forwards;
     }
-    @keyframes floatY{
-      0%,100%{transform:translate(-50%,-50%) translateY(0)}
-      50%{transform:translate(-50%,-50%) translateY(-8px)}
+    @keyframes floatUp{
+      from{transform:translateY(0) scale(.9); opacity:.0}
+      10%{opacity:.9}
+      to{transform:translateY(-120vh) scale(1.2); opacity:0}
     }
-    .breath{
-      position:absolute;
-      left:50%;
-      bottom:80px;
-      transform:translateX(-50%);
-      text-align:center;
-      z-index:4;
-      color:rgba(255,255,255,.35);
-      font-size:11px;
-      letter-spacing:.22em;
-      text-transform:uppercase;
+  </style>
+</head>
+<body>
+  <div class="stars" id="stars"></div>
+  <div class="field" id="field"></div>
+
+  <div class="wrap">
+    <div class="card">
+      <div class="sheep-big">🐑</div>
+      <h1>Sheepy Sleep</h1>
+      <p class="sub">WHISPER COUNTING</p>
+
+      <div class="count">COUNT <span id="count">0</span></div>
+      <div class="status"><span class="bubble" id="bubble">眠る準備ができています</span></div>
+
+      <div class="group">
+        <label for="voice">Voice</label>
+        <select id="voice">
+          <option value="en-US">English (US)</option>
+          <option value="en-GB">English (UK)</option>
+          <option value="ja-JP">Japanese</option>
+        </select>
+      </div>
+
+      <div class="group">
+        <label for="speed">Speed</label>
+        <input id="speed" type="range" min="0.6" max="1.0" step="0.05" value="0.75" />
+      </div>
+
+      <div class="group">
+        <label for="volume">Volume</label>
+        <input id="volume" type="range" min="0" max="1" step="0.05" value="0.8" />
+      </div>
+
+      <div class="btns">
+        <button class="primary" id="startBtn">START SLEEP</button>
+        <button class="ghost" id="stopBtn">STOP</button>
+      </div>
+
+      <div class="tiny">英語音声が入っていない端末では機械音声になることがあります</div>
+    </div>
+  </div>
+
+  <script>
+    const stars = document.getElementById("stars");
+    for (let i = 0; i < 70; i++) {
+      const s = document.createElement("div");
+      s.className = "star";
+      s.style.left = Math.random() * 100 + "%";
+      s.style.top = Math.random() * 100 + "%";
+      s.style.animationDuration = (2 + Math.random() * 5) + "s";
+      s.style.animationDelay = (Math.random() * 5) + "s";
+      s.style.opacity = 0.1 + Math.random() * 0.6;
+      stars.appendChild(s);
     }
-    .ring{
-      width:38px;
-      height:38px;
-      border:1.5px solid rgba(255,255,255,.28);
-      border-radius:50%;
-      margin:0 auto 10px;
-      transition:all 4.2s ease-in-out;
+
+    const ONES = ["","one","two","three","four","five","six","seven","eight","nine","ten",
+      "eleven","twelve","thirteen","fourteen","fifteen","sixteen","seventeen","eighteen","nineteen"];
+    const TENS = ["","","twenty","thirty","forty","fifty","sixty","seventy","eighty","ninety"];
+
+    function toWord(n){
+      if(n < 20) return ONES[n];
+      if(n < 100) return TENS[Math.floor(n/10)] + (n%10 ? "-" + ONES[n%10] : "");
+      if(n < 1000){
+        return ONES[Math.floor(n/100)] + " hundred" + (n%100 ? " " + toWord(n%100) : "");
+      }
+      return String(n);
     }
-    .ring.in{
-      width:70px;
-      height:70px;
+
+    const countEl = document.getElementById("count");
+    const bubbleEl = document.getElementById("bubble");
+    const voiceEl = document.getElementById("voice");
+    const speedEl = document.getElementById("speed");
+    const volumeEl = document.getElementById("volume");
+    const fieldEl = document.getElementById("field");
+
+    let count = 0;
+    let timer = null;
+
+    function speak(text){
+      if(!window.speechSynthesis) return;
+      window.speechSynthesis.cancel();
+      const u = new SpeechSynthesisUtterance(text);
+      u.lang = voiceEl.value;
+      u.rate = parseFloat(speedEl.value);
+      u.pitch = voiceEl.value === "ja-JP" ? 1.0 : 1.08;
+      u.volume = parseFloat(volumeEl.value);
+
+      const voices = window.speechSynthesis.getVoices();
+      const selected = voices.find(v => v.lang === voiceEl.value) ||
+                       voices.find(v => v.lang && v.lang.startsWith(voiceEl.value.split("-")[0]));
+      if(selected) u.voice = selected;
+
+      window.speechSynthesis.speak(u);
     }
-    .result{
-      position:fixed;
-      inset:0;
-      z-index:5;
-      display:none;
-      align-items:center;
-      justify-content:center;
-      padding:20px;
-      background:rgba(5,10,18,.72);
-      backdrop-filter:blur(6px);
+
+    function showSheep(){
+      const s = document.createElement("div");
+      s.className = "float-sheep";
+      s.textContent = Math.random() < 0.1 ? "✨🐑" : "🐑";
+      s.style.left = (10 + Math.random() * 80) + "%";
+      s.style.bottom = "-40px";
+      s.style.animationDuration = (8 + Math.random() * 5) + "s";
+      fieldEl.appendChild(s);
+      setTimeout(() => s.remove(), 13000);
     }
-    .result.active{display:flex}
-    .result-card{
-      width:min(92vw,420px);
-      background:rgba(255,255,255,.08);
-      border:1px solid var(--line);
-      border-radius:26px;
-      padding:28
+
+    function updateBubble(text){
+      bubbleEl.textContent = text;
+    }
+
+    function nextCount(){
+      count += 1;
+      countEl.textContent = count;
+
+      const text = voiceEl.value === "ja-JP"
+        ? count + " 匹のひつじ"
+        : toWord(count) + " sheep";
+
+      updateBubble(text);
+      speak(text);
+      showSheep();
+
+      const delay = 3500 + Math.random() * 2500;
+      timer = setTimeout(nextCount, delay);
+    }
+
+    document.getElementById("startBtn").addEventListener("click", () => {
+      clearTimeout(timer);
+      count = 0;
+      countEl.textContent = "0";
+      updateBubble("やさしい声で数え始めます");
+      window.speechSynthesis && window.speechSynthesis.getVoices();
+      timer = setTimeout(nextCount, 1000);
+    });
+
+    document.getElementById("stopBtn").addEventListener("click", () => {
+      clearTimeout(timer);
+      window.speechSynthesis && window.speechSynthesis.cancel();
+      updateBubble("停止しました");
+    });
+
+    if(window.speechSynthesis){
+      window.speechSynthesis.onvoiceschanged = () => {
+        window.speechSynthesis.getVoices();
+      };
+    }
+  </script>
+</body>
+</html>
